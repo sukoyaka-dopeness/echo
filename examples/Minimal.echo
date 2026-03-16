@@ -1,0 +1,7 @@
+echo_version: 1.0
+authored_by: creator
+
+resonance:
+  - url: https://en.wikipedia.org/wiki/Johannes_Vermeer
+    type: influence
+    note: the way light enters from the left
