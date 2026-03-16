@@ -1,124 +1,145 @@
-# ECHO — Philosophy
+# ECHO
+
+**Embedded Cross-media Homage Offering**
+
+Let every creative work carry its own echoes. A metadata spec for cross-media influence and homage.
 
 ---
 
-## Why ECHO exists
+## What is ECHO
 
-Every creative work is shaped by something that came before it.
+ECHO is a minimal metadata specification that lets any creative work carry its own lineage and resonance.
 
-A novel carries the shadow of a painting. A song answers a poem written a century earlier. A sculpture was born from the same grief as a film made on the other side of the world.
+A novel, a painting, a piece of music, a 3D model — any file can have a companion `echo.yaml` that describes where it came from, what it was shaped by, and what it speaks to.
 
-These relationships exist. But no platform holds them. When a service shuts down, when an algorithm changes, when a ranking cycle buries a work — the connections disappear.
-
-ECHO exists because a work's resonance belongs to the work, not to the platform that hosts it.
+No platform owns this information. The work carries it.
 
 ---
 
-## What ECHO gives to creators
+## Why not Dublin Core
 
-The act of writing an `echo.yaml` is not administrative. It is a creative act.
+Dublin Core has a `relation` element. But its relation types — `HasPart`, `IsVersionOf`, `HasFormat` — are library concepts, not creative ones.
 
-To name what shaped you is to understand your own work more clearly. To declare an influence is to place yourself inside a longer story — one that existed before you and will continue after you.
+Dublin Core cannot describe:
 
-ECHO gives creators:
+- "This work was shaped by that painting"
+- "These two works were born from the same feeling"
+- "This is an answer to that poem"
 
-- A way to say "I was here, and this is what I was listening to"
-- A record that travels with the work, not with the platform
-- A map of influence that no algorithm could infer
-
----
-
-## What ECHO gives to audiences
-
-A work that carries its own `echo.yaml` is an invitation.
-
-The audience can follow the resonance — from this novel to that painting, from that painting to a piece of music, from that music to a poem written four hundred years ago. Not because an algorithm suggested it. Because the creator pointed there.
-
-This is discovery through trust, not through optimization.
+ECHO is not a discovery protocol. It is a homage protocol.
 
 ---
 
-## What ECHO contributes to creative culture
-
-Platforms optimize for engagement. Engagement rewards what is already popular. What is already popular gets more exposure. The cycle continues.
-
-ECHO does not oppose this. It simply exists elsewhere.
-
-A constellation built from `resonance` links is not a ranking. It has no top. It has no algorithm. It grows as creators declare their influences, and it can be entered from any point.
-
-This is what creative culture looked like before platforms — works in conversation with works, across media, across centuries, across languages. ECHO is an attempt to make that conversation legible again.
-
----
-
-## On trust and forgery
-
-ECHO contains no authentication mechanism. Any `echo.yaml` can be written by anyone. Timestamps can be altered. Influences can be fabricated.
-
-This is intentional.
-
-ECHO does not prove trust. It expresses it.
-
-The weight of an expression depends on the relationship between the creator and the community around the work. A fabricated `resonance` link does not damage ECHO — it damages the creator who wrote it. The constellation simply does not grow in that direction.
-
-This is how trust has always worked in creative culture. A painter who falsely claims Vermeer as an influence is not believed. Not because a system prevented the claim. Because the work does not carry it.
-
-> ECHO records intention, not fact. The community decides what to follow.
-
----
-
-## On platforms and independence
-
-ECHO does not require GitHub. It does not require any platform.
-
-An `echo.yaml` can live on a personal server, inside a file's metadata, behind a QR code on a physical object, embedded in an NFC tag beside a painting.
-
-The spec is the only thing that needs to be shared. The files can live anywhere.
-
-This is not anti-platform. It is platform-indifferent. Platforms are welcome to read and display `echo.yaml` data. They simply cannot own it.
-
----
-
-## On the name
-
-An echo does not ask permission.
-
-It is what remains after something has been heard — shaped by the original, but no longer identical to it. It travels into spaces the original never reached. It fades into other echoes.
-
-A creative work is the same. It leaves the creator and becomes something else in each person who receives it. The `echo.yaml` is a record of that outward movement — where the work came from, what it is still in conversation with, what it hopes to reach.
-
----
-
-## On past works and absent creators
-
-Vermeer cannot write an `echo.yaml`. Neither can Murasaki Shikibu, nor Coltrane.
-
-This does not mean their works are excluded from the constellation. It means someone else must speak carefully on their behalf — and must say so.
-
-ECHO distinguishes the source of a declaration through the `authored_by` field:
+## Schema (v1.0)
 
 ```yaml
 echo_version: 1.0
-authored_by: curator  # creator / curator / researcher / community
+authored_by: creator   # creator / curator / researcher / community
+
+meta:
+  title:
+  creator:
+  medium:        # novel / painting / music / poem / model / film / ...
+
+origin:
+  derived_from:  # URL or identifier of the direct source (if any)
 
 resonance:
-  - url: https://en.wikipedia.org/wiki/Caravaggio
-    type: influence
-    note: the use of shadow as weight
+  - url:         # URL or identifier
+    type:        # influence / derived / parallel / response / homage / contrast / sample
+    note:        # optional, in any language
+
+audience:
+  - note:        # optional, written by those who received the work
 ```
 
-A `curator` or `researcher` may write an `echo.yaml` for a past work. A `community` may collectively maintain one. The field is not a credential — it is a disclosure.
+Any field except `echo_version` is optional. A valid `echo.yaml` can be as small as:
 
-> Past works do not speak for themselves in ECHO. But others may speak carefully on their behalf — provided they say who is speaking.
+```yaml
+echo_version: 1.0
+authored_by: creator
 
-This keeps the constellation open across centuries, while preserving the distinction between a creator's own declaration and an interpretation made by others.
+resonance:
+  - url: https://en.wikipedia.org/wiki/Vermeer
+    type: influence
+    note: the way light enters from the left
+```
 
 ---
 
-## Relation to story-passport
+## resonance types
 
-[story-passport](https://github.com/sukoyaka-dopeness/story-passport) is a novel-specific implementation of ECHO, built around Japanese typography, a browser extension reader, and a Markdown dialect for ruby, emphasis dots, and vertical writing.
+| type | meaning |
+|---|---|
+| `influence` | this work was shaped by that work |
+| `derived` | direct derivation or fan work |
+| `parallel` | made in the same period, same feeling, same question |
+| `response` | an answer, a continuation, a reply |
+| `homage` | explicit tribute |
+| `contrast` | made in opposition — disagreement is also homage |
+| `sample` | direct quotation or sampling |
 
-story-passport is where ECHO began. ECHO is where story-passport points.
+---
+
+## Any file. Any medium.
+
+```
+novel.md          painting.png       sculpture.glb
+novel.echo.yaml   painting.echo.yaml sculpture.echo.yaml
+```
+
+The `url` field in `resonance` accepts anything with an identifier:
+
+```yaml
+resonance:
+  - url: https://github.com/someone/novel
+  - url: https://www.pixiv.net/artworks/xxxxx
+  - url: https://archive.org/details/xxxxx
+  - url: isbn:978-4-10-109205-5
+```
+
+ECHO does not depend on any platform. GitHub is one possible host, not a requirement.
+
+---
+
+## Three layers
+
+`echo.yaml` is written by three different kinds of contributors, and they remain distinct. The `authored_by` field declares which layer is speaking:
+
+| `authored_by` | written by | examples |
+|---|---|---|
+| *(omitted)* | tools, automation | `_generated` block only |
+| `creator` | the creator | intent, influence, lineage |
+| `curator` / `researcher` | third party on behalf of past works | scholarly interpretation |
+| `community` | collective maintenance | open contribution |
+
+A creator's own declaration and a curator's interpretation are both valid. They are not the same thing. `authored_by` keeps them distinct.
+
+The `audience` block is written by those who received the work, regardless of `authored_by`.
+
+---
+
+## Design principles
+
+- The core schema is small and will not change after v1.0
+- Extensions may be proposed as `ECHO-EXT-*` by anyone
+- No central registry is required
+- No platform dependency
+- Homage is self-declared, not algorithmically inferred
+
+---
+
+## Name
+
+ECHO — Embedded Cross-media Homage Offering
+
+See [PHILOSOPHY.md](./PHILOSOPHY.md) for the full reasoning.
+
+---
+
+## Related
+
+[story-passport](https://github.com/sukoyaka-dopeness/story-passport) — a novel-specific implementation of ECHO, with a browser extension reader and Japanese typography support.
 
 ---
 
@@ -134,117 +155,110 @@ MIT
 
 ## 日本語
 
----
+**ECHO — Embedded Cross-media Homage Offering**
 
-### なぜECHOは存在するか
-
-あらゆる創作物は、何か先にあったものに形づくられています。
-
-小説は一枚の絵画の影を持っている。ある歌は一世紀前に書かれた詩への返答です。ある彫刻は、地球の反対側で作られた映画と同じ悲しみから生まれた。
-
-こうした関係は存在しています。しかしどのプラットフォームもそれを保持しません。サービスが終了するとき、アルゴリズムが変わるとき、ランキングの循環が作品を埋めるとき——繋がりは消えます。
-
-ECHOは、作品の共鳴が作品自身のものであるべきだという考えから生まれました。それを預けるべきプラットフォームは存在しません。
+すべての創作物が、自分のエコーを持ち歩けるように。メディアを横断するオマージュのためのメタデータ仕様です。
 
 ---
 
-### ECHOが作者に与えるもの
+### ECHOとは
 
-`echo.yaml`を書く行為は、事務作業ではありません。創作行為です。
+ECHOは、あらゆる創作物が自分の来歴と共鳴を持ち歩くための、最小限のメタデータ仕様です。
 
-自分を形づくったものに名前をつけることは、自分の作品をより深く理解することです。影響を宣言することは、自分をより長い物語の中に置くことです——自分より前から存在し、自分の後にも続いていく物語の中に。
+小説、絵画、音楽、3Dモデル——どんなファイルにも、`echo.yaml`というサイドカーファイルを添えることができます。そこには、この作品がどこから生まれたか、何に形づくられたか、何に語りかけているかが記述されます。
 
-ECHOは作者に与えます：
-
-- 「私はここにいた、そしてこれを聴いていた」と言う手段
-- プラットフォームではなく、作品と共に移動する記録
-- どのアルゴリズムにも推測できない、影響の地図
+この情報をプラットフォームは所有しません。作品自身が持ち歩きます。
 
 ---
 
-### ECHOが受け手に与えるもの
+### Dublin Coreではできないこと
 
-`echo.yaml`を持つ作品は、招待状です。
+Dublin Coreにも`relation`要素があります。しかしそのタイプ——`HasPart`、`IsVersionOf`、`HasFormat`——は図書館的な概念であり、創作的な概念ではありません。
 
-受け手はその共鳴を辿ることができます——この小説からあの絵画へ、その絵画から音楽へ、その音楽から四百年前に書かれた詩へ。アルゴリズムが提案したからではなく、作者がそこを指し示したから。
+Dublin Coreで記述できないもの：
 
-これは最適化による発見ではなく、信頼による発見です。
+- 「あの絵画に形づくられた」
+- 「同じ感情から生まれた、別の作品」
+- 「あの詩への返答として書いた」
 
----
-
-### ECHOが創作文化に貢献するもの
-
-プラットフォームはエンゲージメントを最適化します。エンゲージメントはすでに人気のあるものを報酬として与えます。すでに人気のあるものはより多くの露出を得ます。循環は続きます。
-
-ECHOはこれに反対しません。ただ、別の場所に存在します。
-
-`resonance`リンクから構築された星座はランキングではありません。頂点がない。アルゴリズムがない。作者たちが影響を宣言するにつれて育ち、どこからでも入ることができます。
-
-これはプラットフォームが存在する前の創作文化の姿です——メディアを越え、世紀を越え、言語を越えて、作品が作品と対話していた。ECHOはその対話を再び読めるようにする試みです。
+ECHOは発見のプロトコルではありません。オマージュのプロトコルです。
 
 ---
 
-### 信頼と偽造について
+### スキーマ (v1.0)
 
-ECHOには認証の仕組みがありません。`echo.yaml`は誰でも書くことができます。タイムスタンプは改ざんできます。影響は捏造できます。
+`echo_version`と`authored_by`以外のすべてのフィールドは省略可能です。最小限の`echo.yaml`はこれだけで成立します：
 
-これは意図的な設計です。
+```yaml
+echo_version: 1.0
+authored_by: creator
 
-ECHOは信頼を証明しません。信頼を表明します。
+resonance:
+  - url: https://en.wikipedia.org/wiki/Vermeer
+    type: influence
+    note: 左から差し込む光の使い方
+```
 
-表明の重さは、作者とその作品を取り巻くコミュニティの関係が決めます。捏造された`resonance`リンクはECHOを傷つけません——それを書いた作者の信頼を傷つけます。星座はその方向には育ちません。
-
-これは創作文化において信頼が常にそうであり続けた方法です。フェルメールの影響を偽って主張する画家は、信じてもらえません。システムが主張を防いだからではなく、作品がそれを担っていないから。
-
-> ECHOは意図を記録します、事実を記録するのではありません。何を辿るかはコミュニティが決めます。
+`authored_by`には`creator`（作者本人）、`curator`（学芸員・研究者）、`researcher`、`community`が入ります。作者自身の宣言と、第三者による解釈を区別するためのフィールドです。
 
 ---
 
-### プラットフォームと独立性について
+### resonance typesの意味
 
-ECHOはGitHubを必要としません。どんなプラットフォームも必要としません。
+| type | 意味 |
+|---|---|
+| `influence` | あの作品に形づくられた |
+| `derived` | 直接の派生・二次創作 |
+| `parallel` | 同時期、同じ問い、同じ感情から |
+| `response` | 返答・続き・アンサー |
+| `homage` | 明示的なオマージュ |
+| `contrast` | 反発・アンチテーゼ——対立もまたリスペクト |
+| `sample` | 引用・サンプリング |
 
-`echo.yaml`は個人サーバーに置くことも、ファイルのメタデータの中に埋め込むことも、物理的なオブジェクトの横のNFCタグの中に入れることも、絵画の隣のQRコードの先に置くこともできます。
+---
 
-共有される必要があるのは仕様だけです。ファイルはどこにでも置けます。
+### どんなファイルにも、どんなメディアにも
 
-これは反プラットフォームではありません。プラットフォーム非依存です。プラットフォームは`echo.yaml`のデータを読み、表示することを歓迎します。ただ、所有することができないだけです。
+ECHOはプラットフォームに依存しません。GitHubは使える場所のひとつであり、前提ではありません。`resonance`の`url`フィールドには、識別子を持つものであれば何でも記述できます。
+
+---
+
+### 三つの層
+
+`echo.yaml`は三種類の書き手によって書かれ、それぞれは混在しません。
+
+| 層 | 書き手 | 内容 |
+|---|---|---|
+| `_generated` | ツール・自動化 | ファイルサイズ、fork元など |
+| `meta` `origin` `resonance` | 作者 | 意図、影響、来歴 |
+| `audience` | 受け手 | 体験、入口、個人的な記録 |
+
+作者が意図したことと、受け手が感じたことは別のものです。ECHOはそれを混ぜません。
+
+---
+
+### 設計原則
+
+- コアスキーマは小さく保たれ、v1.0以降変更されません
+- 拡張は`ECHO-EXT-*`として誰でも提案できます
+- 中央レジストリは不要です
+- プラットフォームに依存しません
+- オマージュは自己申告です。アルゴリズムが判定するものではありません
 
 ---
 
 ### 名前について
 
-エコーは許可を求めません。
+ECHO — Embedded Cross-media Homage Offering
 
-それは何かが聴かれたあとに残るものです——原音に形づくられながら、もはや同一ではない。原音が届かなかった空間へ移動します。他のエコーへと溶け込んでいきます。
-
-創作物も同じです。作者を離れ、受け取った一人ひとりの中で別の何かになります。`echo.yaml`はその外向きの運動の記録です——この作品がどこから来たか、今もなお何と対話しているか、何に届こうとしているか。
+詳細は [PHILOSOPHY.md](./PHILOSOPHY.md) を参照してください。
 
 ---
 
-### 過去の作品と不在の作者について
+## License
 
-フェルメールは`echo.yaml`を書けません。紫式部も、コルトレーンも。
+MIT
 
-だからといって、彼らの作品が星座から排除されるわけではありません。誰かが彼らに代わって、慎重に語る必要があるということです——そして、誰が語っているかを明示しなければなりません。
+## Author
 
-ECHOは`authored_by`フィールドによって宣言の出所を区別します。
-
-```yaml
-echo_version: 1.0
-authored_by: curator  # creator / curator / researcher / community
-```
-
-`curator`（学芸員・研究者）は過去の作品のために`echo.yaml`を書くことができます。`community`が共同で維持することもできます。このフィールドは資格証明ではありません——開示です。
-
-> 過去の作品はECHOの中で自ら語りません。しかし他者が慎重に代わって語ることができます——誰が語っているかを明示する限りにおいて。
-
-これにより、星座は何世紀にもわたって開かれたまま保たれます。同時に、作者自身の宣言と、他者による解釈の区別が守られます。
-
----
-
-### story-passportとの関係
-
-[story-passport](https://github.com/sukoyaka-dopeness/story-passport)はECHOの小説特化実装です。日本語タイポグラフィ、ブラウザ拡張リーダー、ルビ・傍点・縦書きのためのMarkdown方言を含みます。
-
-story-passportはECHOが始まった場所です。ECHOはstory-passportが指し示す場所です。
+[sukoyaka-dopeness](https://github.com/sukoyaka-dopeness)
