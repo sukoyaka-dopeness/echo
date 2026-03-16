@@ -1,0 +1,24 @@
+echo_version: 1.0
+authored_by: researcher
+
+meta:
+  title: 鷹見泉石像
+  creator: Watanabe Kazan
+  medium: painting
+
+# This echo.yaml is written by a researcher, not by Kazan himself.
+# All resonance entries represent scholarly interpretation, not the creator's stated intent.
+
+resonance:
+  - url: https://en.wikipedia.org/wiki/Rembrandt
+    type: influence
+    note: Kazan's use of shadow and psychological depth reflects awareness of Dutch portraiture,
+      likely via imported prints circulating among rangaku scholars of the period
+  - url: https://en.wikipedia.org/wiki/Maruyama_Okyo
+    type: influence
+    note: Kazan trained within the Maruyama-Shijō lineage; the naturalistic observation of
+      physiognomy is a direct inheritance
+  - url: https://en.wikipedia.org/wiki/Ike_no_Taiga
+    type: contrast
+    note: where Ike no Taiga's bunjin aesthetic dissolved the individual into brushwork,
+      Kazan insisted on the particular face — a political act under Tenpō censorship
