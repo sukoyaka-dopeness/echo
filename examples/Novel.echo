@@ -1,0 +1,24 @@
+echo_version: 1.0
+authored_by: creator
+
+meta:
+  title: 夜の縫い目
+  creator: fictional-creator
+  medium: novel
+
+resonance:
+  - url: https://en.wikipedia.org/wiki/Edward_Hopper
+    type: influence
+    note: not the painting — the feeling underneath it. people in the same room, unreachable
+  - url: https://en.wikipedia.org/wiki/Kind_of_Blue
+    type: parallel
+    note: modal structure as a way of moving without resolving. written asking the same question.
+  - url: isbn:978-4-10-109205-5
+    type: homage
+    note: 最後のページへの返答として、最初の一文を書いた
+  - url: https://en.wikipedia.org/wiki/The_Waves
+    type: contrast
+    note: Woolf dissolves the self into waves. this novel insists on it, even when it breaks.
+
+audience:
+  - note: I came to this from Hopper too. the diner window led me here.
