@@ -1,0 +1,24 @@
+echo_version: 1.0
+authored_by: creator
+
+meta:
+  title: signal / noise
+  creator: fictional-creator
+  medium: music
+
+origin:
+  derived_from: https://archive.org/details/78_st-james-infirmary_cab-calloway
+
+resonance:
+  - url: https://en.wikipedia.org/wiki/St._James_Infirmary_Blues
+    type: sample
+    note: the opening four bars, reversed and stretched to 32 seconds
+  - url: https://en.wikipedia.org/wiki/Alvin_Lucier
+    type: influence
+    note: I Am Sitting in a Room — decay as the composition, not the enemy of it
+  - url: https://en.wikipedia.org/wiki/Disintegration_Loops
+    type: parallel
+    note: made in the same year I found Basinski. asking the same question about what survives.
+  - url: https://en.wikipedia.org/wiki/Ambient_1/Music_for_Airports
+    type: response
+    note: Eno taught stillness. this is an attempt to describe the moment before stillness arrives.
